@@ -3,7 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/drawable/cur_item.xml" value="0.1575" />
+        <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/drawable/ic_baseline_currency_bitcoin_36.xml" value="0.1575" />
+        <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/drawable/ic_baseline_currency_exchange_36.xml" value="0.1575" />
+        <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/drawable/ic_baseline_favorite_36.xml" value="0.1575" />
+        <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.1575" />
         <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/layout/currency_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/layout/favorite_currency_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/layout/fragment_convert.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/layout/fragment_exchange_currency.xml" value="0.264" />
+        <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/layout/fragment_list_currency.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/layout/fragment_saved_currency.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>
