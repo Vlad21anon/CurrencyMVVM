@@ -6,8 +6,13 @@
         <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/drawable/cur_item.xml" value="0.1575" />
         <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/drawable/ic_baseline_currency_bitcoin_36.xml" value="0.1575" />
         <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/drawable/ic_baseline_currency_exchange_36.xml" value="0.1575" />
+        <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.17" />
         <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/drawable/ic_baseline_favorite_36.xml" value="0.1575" />
         <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.1575" />
+        <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/drawable/ic_baseline_favorite_border_36.xml" value="0.17" />
+        <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/drawable/ic_baseline_refresh_36.xml" value="0.17" />
+        <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/drawable/ic_baseline_saved_36.xml" value="0.17" />
+        <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/layout/activity_currency.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/layout/currency_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/layout/favorite_currency_item.xml" value="0.25416666666666665" />

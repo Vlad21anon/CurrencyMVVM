@@ -25,10 +25,22 @@
         android:textSize="32sp"
         android:text=" = "/>
     <TextView
+        android:id="@+id/tvCurPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="32sp"
         tools:text="100,100"/>
 
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <ImageButton
+        android:id="@+id/ibRefresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/ic_baseline_refresh_36" />
 </LinearLayout>

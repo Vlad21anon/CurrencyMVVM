@@ -14,16 +14,28 @@
         android:padding="12dp"
         android:text="Currency in USD"/>
     <TextView
+        android:id="@+id/tvActualAt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Actual at ..."
         android:textAlignment="textEnd"
         android:paddingRight="12dp"
         tools:text="Actual at DATE"/>
+    <ProgressBar
+        android:id="@+id/loadingProgressBar"
+        style="?attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:visibility="visible"
+        android:background="@android:color/transparent"/>
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvListCur"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/currency_item"/>
+
 
 
 </LinearLayout>
