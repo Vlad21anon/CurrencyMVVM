@@ -14,5 +14,7 @@ data class CurrencyNameAndPrice(
 
     val name:String,
     val price:Double,
+
+    var actualAt:String,
     var isSaved:Boolean
 ):Serializable

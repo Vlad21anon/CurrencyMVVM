@@ -9,7 +9,7 @@ import com.ukadovlad21.mvvm1.models.CurrencyNameAndPrice
 
 @Database(
     entities = [CurrencyNameAndPrice::class],
-    version = 1
+    version = 3
 )
 
 //@TypeConverters(Converters::class)

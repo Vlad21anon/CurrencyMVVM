@@ -6,60 +6,59 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.ukadovlad21.mvvm1.R
 import com.ukadovlad21.mvvm1.models.CurrencyNameAndPrice
 import kotlinx.android.synthetic.main.currency_item.*
 import kotlinx.android.synthetic.main.currency_item.view.*
 
-class CurrencyAdapter: RecyclerView.Adapter<CurrencyAdapter.CurrencyViewHolder>() {
-    inner class CurrencyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView)
 
+class CurrencyAdapter: ListAdapter<CurrencyNameAndPrice, CurrencyItemHolder>(ItemComparator()) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyItemHolder =
+        CurrencyItemHolder(parent)
+    override fun onBindViewHolder(holder: CurrencyItemHolder, position: Int) {
+        holder.bind(getItem(position))
+        holder.itemView.ibSave.setOnClickListener {
+            getItem(position).isSaved = true
+            holder.itemView.ibSave.setImageResource(R.drawable.ic_baseline_favorite_36)
+            saveItemToDb?.let { it(getItem(position)) }
+        }
 
-    private val differCallback = object : DiffUtil.ItemCallback<CurrencyNameAndPrice>() {
+    }
+    class ItemComparator:DiffUtil.ItemCallback<CurrencyNameAndPrice>(){
         override fun areItemsTheSame(oldItem: CurrencyNameAndPrice, newItem: CurrencyNameAndPrice): Boolean {
-            return oldItem.name == newItem.name
+            return oldItem == newItem
         }
         override fun areContentsTheSame(oldItem: CurrencyNameAndPrice, newItem: CurrencyNameAndPrice): Boolean {
-            return oldItem.name == newItem.name
+            return oldItem == newItem
         }
-
-
     }
-    val differ = AsyncListDiffer(this, differCallback)
-
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {
-        return CurrencyViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.currency_item,parent,false))
+    private var saveItemToDb: ((CurrencyNameAndPrice) -> Unit)? = null
+    fun saveItemToDb(listener: (CurrencyNameAndPrice) -> Unit) {
+        saveItemToDb = listener
     }
+}
 
-    override fun onBindViewHolder(holder: CurrencyViewHolder, position: Int) {
-        val currency = differ.currentList[position]
-        holder.itemView.apply {
+class CurrencyItemHolder(container:ViewGroup):RecyclerView.ViewHolder(
+    LayoutInflater.from(container.context).inflate(
+        R.layout.currency_item, container, false)
+) {
+    fun bind(currency: CurrencyNameAndPrice) {
+        itemView.apply {
             tvCurName.text = currency.name
-            tvCurPrice.text = currency.price.toString()
+            val price = if (currency.price.toString().length<8) currency.price.toString()
+            else currency.price.toString().substring(0,8)
+            tvCurPrice.text = price
 
             ibSave.setImageResource(R.drawable.ic_baseline_favorite_border_36)
             if (currency.isSaved) {
                 ibSave.setImageResource(R.drawable.ic_baseline_favorite_36)
             }
-            ibSave.setOnClickListener {
-                currency.isSaved = true
-                ibSave.setImageResource(R.drawable.ic_baseline_favorite_36)
-                saveItemToDb?.let { it(currency) }
-            }
+
         }
 
     }
-
-    override fun getItemCount(): Int {
-        return differ.currentList.size
-    }
-
-    private var saveItemToDb: ((CurrencyNameAndPrice) -> Unit)? = null
-    fun saveItemToDb(listener: (CurrencyNameAndPrice) -> Unit) {
-        saveItemToDb = listener
-    }
-
 }
 

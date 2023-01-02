@@ -73,7 +73,7 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 
-//    def fragmentKtxVersion = '1.5.2'
-//    implementation "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
+    def fragmentKtxVersion = '1.5.2'
+    implementation "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
 
 }

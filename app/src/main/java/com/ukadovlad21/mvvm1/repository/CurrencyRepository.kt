@@ -8,7 +8,9 @@ class CurrencyRepository(
     val db: CurrencyDatabase
 ) {
     suspend fun getCurrency(base:String) =
-        RetrofitInstance.api.getLatestCurrency("?base=$base")
+        RetrofitInstance.api.getLatestCurrency(base)
+    suspend fun getCurrencyNameToName(fromName:String,toName:String,amount:Int) =
+        RetrofitInstance.api.getFromNameToName(fromName,toName,amount.toString())
 
 
     suspend fun upsert(currencyNameAndPrice: CurrencyNameAndPrice)
@@ -16,5 +18,11 @@ class CurrencyRepository(
     fun getSavedCurrencies()
         = db.getCurrencyDao().getAllSavedCurrencies()
     suspend fun deleteCurrency(currencyNameAndPrice: CurrencyNameAndPrice)
-        = db.getCurrencyDao().deleteArticle(currencyNameAndPrice)
+        = db.getCurrencyDao().deleteCurrency(currencyNameAndPrice)
+    suspend fun updateCurrency(currencyNameAndPrice: CurrencyNameAndPrice)
+            = db.getCurrencyDao().updateCurrency(
+                    currencyNameAndPrice.name,
+                    currencyNameAndPrice.price,
+                    currencyNameAndPrice.actualAt
+    )
 }
