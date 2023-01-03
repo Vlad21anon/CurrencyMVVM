@@ -20,11 +20,18 @@ class CurrencyAdapter: ListAdapter<CurrencyNameAndPrice, CurrencyItemHolder>(Ite
         CurrencyItemHolder(parent)
     override fun onBindViewHolder(holder: CurrencyItemHolder, position: Int) {
         holder.bind(getItem(position))
-        holder.itemView.ibSave.setOnClickListener {
-            getItem(position).isSaved = true
+        if (getItem(position).isSaved) {
             holder.itemView.ibSave.setImageResource(R.drawable.ic_baseline_favorite_36)
-            saveItemToDb?.let { it(getItem(position)) }
+        } else {
+            holder.itemView.ibSave.setImageResource(R.drawable.ic_baseline_favorite_border_36)
+            holder.itemView.ibSave.setOnClickListener {
+                holder.itemView.ibSave.isClickable = false
+                getItem(position).isSaved = true
+                holder.itemView.ibSave.setImageResource(R.drawable.ic_baseline_favorite_36)
+                saveItemToDb?.let { it(getItem(position)) }
+            }
         }
+
 
     }
     class ItemComparator:DiffUtil.ItemCallback<CurrencyNameAndPrice>(){
@@ -41,7 +48,7 @@ class CurrencyAdapter: ListAdapter<CurrencyNameAndPrice, CurrencyItemHolder>(Ite
     }
 }
 
-class CurrencyItemHolder(container:ViewGroup):RecyclerView.ViewHolder(
+class CurrencyItemHolder(container:ViewGroup):ViewHolder(
     LayoutInflater.from(container.context).inflate(
         R.layout.currency_item, container, false)
 ) {
@@ -52,10 +59,6 @@ class CurrencyItemHolder(container:ViewGroup):RecyclerView.ViewHolder(
             else currency.price.toString().substring(0,8)
             tvCurPrice.text = price
 
-            ibSave.setImageResource(R.drawable.ic_baseline_favorite_border_36)
-            if (currency.isSaved) {
-                ibSave.setImageResource(R.drawable.ic_baseline_favorite_36)
-            }
 
         }
 

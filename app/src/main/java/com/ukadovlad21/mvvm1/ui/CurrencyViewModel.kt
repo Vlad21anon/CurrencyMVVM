@@ -131,7 +131,7 @@ class CurrencyViewModel(
     fun saveCurrency(currencyNameAndPrice: CurrencyNameAndPrice) = viewModelScope.launch {
         currencyRepository.upsert(currencyNameAndPrice)
     }
-    fun getSavedCurrencies() = currencyRepository.getSavedCurrencies()
+    fun getSavedCurrencies() = currencyRepository.getSavedCurrencies() //возвращает LiveData<List<CurrencyNameAndPrice>>
 
     fun deleteSavedCurrency(currencyNameAndPrice: CurrencyNameAndPrice) = viewModelScope.launch {
         currencyRepository.deleteCurrency(currencyNameAndPrice)

@@ -11,7 +11,7 @@ interface CurrencyDao {
     suspend fun upsert(currencyNameAndPrice: CurrencyNameAndPrice): Long
 
     @Query("SELECT * FROM currencies ")
-    fun getAllSavedCurrencies(): LiveData<List<CurrencyNameAndPrice>>
+    fun getAllSavedCurrencies():LiveData<List<CurrencyNameAndPrice>>
 
     @Delete
     suspend fun deleteCurrency(currencyNameAndPrice: CurrencyNameAndPrice)

@@ -11,9 +11,13 @@ import kotlinx.android.synthetic.main.fragment_exchange_currency.*
 
 class ExchangeCurrencyFragment : Fragment(R.layout.fragment_exchange_currency) {
 
+
+    val viewModel by lazy {
+        (activity as CurrencyActivity).currencyViewModel
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel = (activity as CurrencyActivity).currencyViewModel
 
 
         btnConvert.setOnClickListener {
