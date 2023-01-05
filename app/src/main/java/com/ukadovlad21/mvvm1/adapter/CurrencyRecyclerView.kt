@@ -40,6 +40,7 @@ class CurrencyAdapter : ListAdapter<CurrencyNameAndPrice, CurrencyItemHolder>(It
         holder.bind(getItem(position))
         if (getItem(position).isSaved) {
             holder.itemView.ibSave.setImageResource(R.drawable.ic_baseline_favorite_36)
+            holder.itemView.ibSave.isClickable = false
         } else {
             holder.itemView.ibSave.setImageResource(R.drawable.ic_baseline_favorite_border_36)
             holder.itemView.ibSave.setOnClickListener {
