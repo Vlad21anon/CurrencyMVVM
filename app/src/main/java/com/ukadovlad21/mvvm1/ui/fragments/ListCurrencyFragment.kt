@@ -1,7 +1,6 @@
 package com.ukadovlad21.mvvm1.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
@@ -15,13 +14,12 @@ import kotlinx.android.synthetic.main.fragment_list_currency.*
 
 class ListCurrencyFragment : Fragment(R.layout.fragment_list_currency) {
 
-    val currencyAdapter = CurrencyAdapter()
+    private val currencyAdapter = CurrencyAdapter()
 
-    val viewModel by lazy {
+    private val viewModel by lazy {
         (activity as CurrencyActivity).currencyViewModel
     }
 
-    @Suppress("NAME_SHADOWING")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -29,28 +27,32 @@ class ListCurrencyFragment : Fragment(R.layout.fragment_list_currency) {
 
         currencyAdapter.saveItemToDb {
             viewModel.saveCurrency(it)
-            Toast.makeText(requireContext(),"${it.name} Saved",Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "${it.name} Saved", Toast.LENGTH_SHORT).show()
         }
 
         viewModel.currency.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Success -> {
-                    hideLoading()
-                    response.data?.let { response ->
-                        val actualString = "Actual at "+ response.date
+                    hideLoadingBar()
+                    response.data?.let { responses ->
+                        val actualString = "Actual at " + responses.date
+
                         tvActualAt.text = actualString
-                        val listCurrencyNameAndPrice: List<CurrencyNameAndPrice> = responseToList(response.rates,response.date)
+
+                        val listCurrencyNameAndPrice: List<CurrencyNameAndPrice> =
+                            viewModel.responseToList(responses.rates, responses.date)
+
                         currencyAdapter.submitList(listCurrencyNameAndPrice)
                     }
                 }
                 is Resource.Error -> {
-                    hideLoading()
+                    hideLoadingBar()
                     response.message?.let { message ->
                         Toast.makeText(activity, "An error occurred: $message", Toast.LENGTH_LONG)
                             .show()
                     }
                 }
-                is Resource.Loading -> { showLoading() }
+                is Resource.Loading -> showLoadingBar()
 
             }
 
@@ -59,39 +61,15 @@ class ListCurrencyFragment : Fragment(R.layout.fragment_list_currency) {
     }
 
 
-
-    private fun responseToList(rates: Map<String, Double>, data: String): MutableList<CurrencyNameAndPrice> {
-        var list: MutableList<CurrencyNameAndPrice> = mutableListOf()
-        rates.forEach { map ->
-            val item = CurrencyNameAndPrice(null,
-                map.key,
-                map.value,
-                data,
-                isSavedToDb(map.key)
-            )
-            list.add(item)
-        }
-        return list
-    }
-    private fun isSavedToDb(name:String):Boolean{
-        viewModel.getSavedCurrencies().observe(viewLifecycleOwner) {
-
-
-
-        }
-        return false //Должен вернуть true/false
-    }
-
-
-    private fun hideLoading() {
+    private fun hideLoadingBar() {
         loadingProgressBar.visibility = View.GONE
         rvListCur.visibility = View.VISIBLE
     }
-    private fun showLoading() {
+
+    private fun showLoadingBar() {
         loadingProgressBar.visibility = View.VISIBLE
         rvListCur.visibility = View.GONE
     }
-
 
 
     private fun setupRecyclerView() {

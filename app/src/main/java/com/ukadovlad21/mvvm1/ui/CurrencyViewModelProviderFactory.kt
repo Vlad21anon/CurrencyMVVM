@@ -7,10 +7,10 @@ import com.ukadovlad21.mvvm1.repository.CurrencyRepository
 
 class CurrencyViewModelProviderFactory(
     val app: Application,
-    val currencyRepository: CurrencyRepository
+    private val currencyRepository: CurrencyRepository
 ) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return CurrencyViewModel(app,currencyRepository) as T
+        return CurrencyViewModel(app, currencyRepository) as T
     }
 }

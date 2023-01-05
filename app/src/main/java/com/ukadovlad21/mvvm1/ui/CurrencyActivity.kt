@@ -15,7 +15,7 @@ class CurrencyActivity : AppCompatActivity() {
 
     private var currencyRepository: CurrencyRepository? = null
     val currencyViewModel: CurrencyViewModel by viewModels {
-        CurrencyViewModelProviderFactory(application,currencyRepository!!)
+        CurrencyViewModelProviderFactory(application, currencyRepository!!)
     }
 
 
@@ -28,7 +28,6 @@ class CurrencyActivity : AppCompatActivity() {
         bottomNavigationView.setupWithNavController(newsNavHostFragment.findNavController())
 
     }
-
 
 
 }

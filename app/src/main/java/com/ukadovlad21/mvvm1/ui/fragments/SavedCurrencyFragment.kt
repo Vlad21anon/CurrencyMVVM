@@ -16,22 +16,23 @@ import com.ukadovlad21.mvvm1.utils.Resource
 import kotlinx.android.synthetic.main.fragment_saved_currency.*
 
 class SavedCurrencyFragment : Fragment(R.layout.fragment_saved_currency) {
-    val savedCurrencyAdapter = SavedCurrencyAdapter()
+    private val savedCurrencyAdapter = SavedCurrencyAdapter()
 
-    val viewModel by lazy {
+    private val viewModel by lazy {
         (activity as CurrencyActivity).currencyViewModel
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
-        viewModel.getSavedCurrencies().observe(viewLifecycleOwner) {
+        viewModel.getSavedCurrenciesLiveData().observe(viewLifecycleOwner) {
             savedCurrencyAdapter.submitList(it)
         }
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-        ){
+        ) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -44,7 +45,11 @@ class SavedCurrencyFragment : Fragment(R.layout.fragment_saved_currency) {
                 val position = viewHolder.adapterPosition
                 val currency = savedCurrencyAdapter.currentList[position]
                 viewModel.deleteSavedCurrency(currency)
-                Snackbar.make(view, "Successfully deleted \"${currency.name}\"", Snackbar.LENGTH_LONG).apply {
+                Snackbar.make(
+                    view,
+                    "Successfully deleted \"${currency.name}\"",
+                    Snackbar.LENGTH_LONG
+                ).apply {
                     setAction("Undo") {
                         viewModel.saveCurrency(currency)
                     }
@@ -57,32 +62,35 @@ class SavedCurrencyFragment : Fragment(R.layout.fragment_saved_currency) {
             attachToRecyclerView(rvSavedListCur)
         }
 
-        savedCurrencyAdapter.setOnClickRefresh { curNameAndPrice ->
-            viewModel.getByNames("USD",curNameAndPrice.name)
-            viewModel.refreshCurrency.observe(viewLifecycleOwner) {response ->
-                when(response) {
+        savedCurrencyAdapter.setOnClickRefresh { (id, name, _, _, isSaved) ->
+            viewModel.getByNames("USD", name)
+            viewModel.refreshCurrency.observe(viewLifecycleOwner) { response ->
+                when (response) {
                     is Resource.Success -> {
-                        hideLoading()
-                        if (response.data?.query?.to == curNameAndPrice.name) {
+                        hideLoadingBar()
+                        if (response.data?.query?.to == name) {
                             val newCurrency = CurrencyNameAndPrice(
-                                curNameAndPrice.id,
-                                curNameAndPrice.name, response.data!!.info.rate,
-                                response.data.date, curNameAndPrice.isSaved
+                                id,
+                                name, response.data.info.rate,
+                                response.data.date, isSaved
                             )
                             viewModel.updateCurrency(newCurrency)
 
                         }
                     }
                     is Resource.Error -> {
-                        hideLoading()
+                        hideLoadingBar()
                         response.message?.let { message ->
-                            Toast.makeText(activity, "An error occurred: $message", Toast.LENGTH_LONG)
+                            Toast.makeText(
+                                activity,
+                                "An error occurred: $message",
+                                Toast.LENGTH_LONG
+                            )
                                 .show()
                         }
                     }
-                    is Resource.Loading -> {
-                        showLoading()
-                    }
+                    is Resource.Loading -> showLoadingBar()
+
 
                 }
 
@@ -91,8 +99,13 @@ class SavedCurrencyFragment : Fragment(R.layout.fragment_saved_currency) {
         }
     }
 
-    private fun showLoading() { pbSavedCurItem.visibility = View.VISIBLE }
-    private fun hideLoading() { pbSavedCurItem.visibility = View.INVISIBLE }
+    private fun showLoadingBar() {
+        pbSavedCurItem.visibility = View.VISIBLE
+    }
+
+    private fun hideLoadingBar() {
+        pbSavedCurItem.visibility = View.INVISIBLE
+    }
 
 
     private fun setupRecyclerView() {

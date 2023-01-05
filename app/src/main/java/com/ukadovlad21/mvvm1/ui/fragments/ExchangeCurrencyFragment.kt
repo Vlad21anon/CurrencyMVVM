@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.fragment_exchange_currency.*
 class ExchangeCurrencyFragment : Fragment(R.layout.fragment_exchange_currency) {
 
 
-    val viewModel by lazy {
+    private val viewModel by lazy {
         (activity as CurrencyActivity).currencyViewModel
     }
 
@@ -29,31 +29,32 @@ class ExchangeCurrencyFragment : Fragment(R.layout.fragment_exchange_currency) {
             viewModel.convertCurrency.observe(viewLifecycleOwner) { response ->
                 when (response) {
                     is Resource.Success -> {
-                        hideLoading()
+                        hideLoadingBar()
                         tvResult.text = response.data?.result.toString()
                         tvDate.text = response.data?.date.toString()
                     }
                     is Resource.Error -> {
-                        hideLoading()
+                        hideLoadingBar()
                         response.message?.let { message ->
-                            Toast.makeText(activity, "An error occurred: $message", Toast.LENGTH_LONG)
-                                .show()
+                            Toast.makeText(
+                                activity,
+                                "An error occurred: $message",
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                     }
-                    is Resource.Loading -> {
-                        showLoading()
-                    }
+                    is Resource.Loading -> showLoadingBar()
                 }
             }
         }
 
     }
 
-    private fun showLoading() {
+    private fun showLoadingBar() {
         progressBar.visibility = View.VISIBLE
     }
 
-    private fun hideLoading() {
+    private fun hideLoadingBar() {
         progressBar.visibility = View.INVISIBLE
     }
 

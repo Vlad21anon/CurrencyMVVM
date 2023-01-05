@@ -5,16 +5,14 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 
-@Entity(
-    tableName = "currencies"
-)
+@Entity(tableName = "currencies")
 data class CurrencyNameAndPrice(
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null,
 
-    val name:String,
-    val price:Double,
+    val name: String,
+    val price: Double,
 
-    var actualAt:String,
-    var isSaved:Boolean
-):Serializable
+    var actualAt: String,
+    var isSaved: Boolean
+) : Serializable
