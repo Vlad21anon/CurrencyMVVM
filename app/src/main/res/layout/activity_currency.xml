@@ -27,8 +27,8 @@
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        app:itemTextColor="@color/golden"
-        android:background="@color/grey"
+        app:itemTextColor="@color/dark_grey"
+        android:background="@drawable/menu_background"
         android:id="@+id/bottomNavigationView"
         app:menu="@menu/bottom_navigation_menu"
         android:layout_width="match_parent"

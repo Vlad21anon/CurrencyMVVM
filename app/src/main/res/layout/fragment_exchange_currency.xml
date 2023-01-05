@@ -38,12 +38,17 @@
         android:textSize="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
     <Spinner
         android:id="@+id/spFrom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:entries="@array/currency_codes"
-        android:padding="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="24dp"
+
         app:layout_constraintEnd_toEndOf="@+id/tvFrom"
         app:layout_constraintStart_toStartOf="@+id/tvFrom"
         app:layout_constraintTop_toBottomOf="@+id/tvFrom" />
@@ -54,12 +59,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:visibility="gone"
+        android:indeterminateTint="@color/blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tilFrom"
         tools:visibility="visible" />
-
-
 
 
     <TextView
@@ -67,18 +71,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="56dp"
         android:text="To"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
     <Spinner
         android:id="@+id/spTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:entries="@array/currency_codes"
-        android:padding="15dp"
+        android:paddingLeft="24dp"
+        android:paddingTop="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="15dp"
         app:layout_constraintEnd_toEndOf="@+id/tvTo"
+        app:layout_constraintHorizontal_bias="0.365"
         app:layout_constraintStart_toStartOf="@+id/tvTo"
         app:layout_constraintTop_toBottomOf="@+id/tvTo" />
 
@@ -133,6 +142,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:background="@color/purple_700_2"
         android:text="Convert"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
