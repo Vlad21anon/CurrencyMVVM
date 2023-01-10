@@ -10,13 +10,16 @@ import com.ukadovlad21.mvvm1.models.CurrencyNameAndPrice
 import kotlinx.android.synthetic.main.currency_item.view.*
 
 
-class CurrencyAdapter : ListAdapter<CurrencyNameAndPrice, CurrencyItemHolder>(ItemComparator()) {
+class CurrencyAdapter(
+    private val saveItemToDb: ((CurrencyNameAndPrice) -> Unit)
+) : ListAdapter<CurrencyNameAndPrice, CurrencyItemHolder>(ItemComparator()) {
     class ItemComparator : DiffUtil.ItemCallback<CurrencyNameAndPrice>() {
+
         override fun areItemsTheSame(
             oldItem: CurrencyNameAndPrice,
             newItem: CurrencyNameAndPrice
         ): Boolean {
-            return oldItem == newItem
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
@@ -25,6 +28,7 @@ class CurrencyAdapter : ListAdapter<CurrencyNameAndPrice, CurrencyItemHolder>(It
         ): Boolean {
             return oldItem == newItem
         }
+
     }
 
     private var _saveItemToDb: ((CurrencyNameAndPrice) -> Unit)? = null
@@ -34,7 +38,7 @@ class CurrencyAdapter : ListAdapter<CurrencyNameAndPrice, CurrencyItemHolder>(It
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyItemHolder =
-        CurrencyItemHolder(parent)
+        CurrencyItemHolder(saveItemToDb, parent)
 
     override fun onBindViewHolder(holder: CurrencyItemHolder, position: Int) {
         holder.bind(getItem(position))
@@ -57,7 +61,10 @@ class CurrencyAdapter : ListAdapter<CurrencyNameAndPrice, CurrencyItemHolder>(It
 
 }
 
-class CurrencyItemHolder(container: ViewGroup) : ViewHolder(
+class CurrencyItemHolder(
+    saveItemToDb: ((CurrencyNameAndPrice) -> Unit),
+    container: ViewGroup
+) : ViewHolder(
     LayoutInflater.from(container.context).inflate(
         R.layout.currency_item, container, false
     )
@@ -68,8 +75,6 @@ class CurrencyItemHolder(container: ViewGroup) : ViewHolder(
             val price = if (currency.price.toString().length < 8) currency.price.toString()
             else currency.price.toString().substring(0, 8)
             tvCurPrice.text = price
-
-
         }
 
     }

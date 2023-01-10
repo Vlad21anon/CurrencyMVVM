@@ -1,6 +1,7 @@
 package com.ukadovlad21.mvvm1.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -36,8 +37,10 @@ class SavedCurrencyAdapter :
         _setOnClickRefresh = listener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavedCurrencyItemHolder =
-        SavedCurrencyItemHolder(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavedCurrencyItemHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.favorite_currency_item, parent, false)
+        return SavedCurrencyItemHolder(view)
+    }
 
     override fun onBindViewHolder(holder: SavedCurrencyItemHolder, position: Int) {
         holder.bind(getItem(position))
@@ -50,11 +53,7 @@ class SavedCurrencyAdapter :
 
 }
 
-class SavedCurrencyItemHolder(container: ViewGroup) : RecyclerView.ViewHolder(
-    LayoutInflater.from(container.context).inflate(
-        R.layout.favorite_currency_item, container, false
-    )
-) {
+class SavedCurrencyItemHolder(container: View) : RecyclerView.ViewHolder(container) {
     fun bind(currency: CurrencyNameAndPrice) {
         itemView.apply {
             tvCurName.text = currency.name

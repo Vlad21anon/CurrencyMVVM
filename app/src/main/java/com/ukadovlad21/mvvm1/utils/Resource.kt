@@ -1,12 +1,11 @@
 package com.ukadovlad21.mvvm1.utils
 
-sealed class Resource<T>(
-    val data: T? = null,
-    val message: String? = null
-) {
+sealed class Resource<out DATA> {
 
-    class Success<T>(data: T) : Resource<T>(data)
-    class Error<T>(message: String, data: T? = null) : Resource<T>(data, message)
-    class Loading<T> : Resource<T>()
+    class Success<DATA>(val data: DATA) : Resource<DATA>()
+
+    class Error(val message: String) : Resource<Nothing>()
+
+    object Loading : Resource<Nothing>()
 
 }
