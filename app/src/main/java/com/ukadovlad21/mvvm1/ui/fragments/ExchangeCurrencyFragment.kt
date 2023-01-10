@@ -26,16 +26,16 @@ class ExchangeCurrencyFragment : Fragment(R.layout.fragment_exchange_currency) {
             val amount = tietFrom.text.toString().toInt()
 
             viewModel.convertByNames(fromName, toName, amount)
-            viewModel.convertCurrency.observe(viewLifecycleOwner) { response ->
+                .observe(viewLifecycleOwner) { response ->
                 when (response) {
                     is Resource.Success -> {
                         hideLoadingBar()
-                        tvResult.text = response.data?.result.toString()
-                        tvDate.text = response.data?.date.toString()
+                        tvResult.text = response.data.result.toString()
+                        tvDate.text = response.data.date
                     }
                     is Resource.Error -> {
                         hideLoadingBar()
-                        response.message?.let { message ->
+                        response.message.let { message ->
                             Toast.makeText(
                                 activity,
                                 "An error occurred: $message",

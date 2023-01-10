@@ -63,12 +63,11 @@ class SavedCurrencyFragment : Fragment(R.layout.fragment_saved_currency) {
         }
 
         savedCurrencyAdapter.setOnClickRefresh { (id, name, _, _, isSaved) ->
-            viewModel.getByNames("USD", name)
-            viewModel.refreshCurrency.observe(viewLifecycleOwner) { response ->
+            viewModel.getByNames("USD", name).observe(viewLifecycleOwner) { response ->
                 when (response) {
                     is Resource.Success -> {
                         hideLoadingBar()
-                        if (response.data?.query?.to == name) {
+                        if (response.data.query.to == name) {
                             val newCurrency = CurrencyNameAndPrice(
                                 id,
                                 name, response.data.info.rate,
@@ -80,7 +79,7 @@ class SavedCurrencyFragment : Fragment(R.layout.fragment_saved_currency) {
                     }
                     is Resource.Error -> {
                         hideLoadingBar()
-                        response.message?.let { message ->
+                        response.message.let { message ->
                             Toast.makeText(
                                 activity,
                                 "An error occurred: $message",

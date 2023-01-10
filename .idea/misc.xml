@@ -21,6 +21,14 @@
         <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/layout/fragment_list_currency.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/layout/fragment_saved_currency.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Vlad/AndroidStudioProjects/Learn/MVVM1/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/project/CurrencyMVVM/app/src/main/res/drawable/cur_item_style.xml" value="0.2275" />
+        <entry key="..\:/project/CurrencyMVVM/app/src/main/res/layout/activity_currency.xml" value="0.358695652173913" />
+        <entry key="..\:/project/CurrencyMVVM/app/src/main/res/layout/currency_item.xml" value="0.358695652173913" />
+        <entry key="..\:/project/CurrencyMVVM/app/src/main/res/layout/favorite_currency_item.xml" value="0.1762917933130699" />
+        <entry key="..\:/project/CurrencyMVVM/app/src/main/res/layout/fragment_exchange_currency.xml" value="0.358695652173913" />
+        <entry key="..\:/project/CurrencyMVVM/app/src/main/res/layout/fragment_list_currency.xml" value="0.358695652173913" />
+        <entry key="..\:/project/CurrencyMVVM/app/src/main/res/layout/fragment_saved_currency.xml" value="0.358695652173913" />
+        <entry key="..\:/project/CurrencyMVVM/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.3625" />
       </map>
     </option>
   </component>

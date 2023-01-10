@@ -11,6 +11,6 @@ class CurrencyViewModelProviderFactory(
 ) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return CurrencyViewModel(app, currencyRepository) as T
+        return CurrencyViewModel(app, currencyRepository, CheckInternetStateUseCase(app), ResponseMapper(currencyRepository)) as T
     }
 }

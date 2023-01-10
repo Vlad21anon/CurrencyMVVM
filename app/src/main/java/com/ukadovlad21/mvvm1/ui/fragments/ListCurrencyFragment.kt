@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_list_currency.*
 
 class ListCurrencyFragment : Fragment(R.layout.fragment_list_currency) {
 
-    private val currencyAdapter = CurrencyAdapter()
+    private lateinit var currencyAdapter: CurrencyAdapter
 
     private val viewModel by lazy {
         (activity as CurrencyActivity).currencyViewModel
@@ -25,29 +25,29 @@ class ListCurrencyFragment : Fragment(R.layout.fragment_list_currency) {
 
         setupRecyclerView()
 
-        currencyAdapter.saveItemToDb {
+        currencyAdapter = CurrencyAdapter {
             viewModel.saveCurrency(it)
             Toast.makeText(requireContext(), "${it.name} Saved", Toast.LENGTH_SHORT).show()
         }
 
-        viewModel.currency.observe(viewLifecycleOwner) { response ->
+        viewModel.getCurrency().observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Success -> {
                     hideLoadingBar()
-                    response.data?.let { responses ->
+                    response.data.let { responses ->
                         val actualString = "Actual at " + responses.date
 
                         tvActualAt.text = actualString
 
                         val listCurrencyNameAndPrice: List<CurrencyNameAndPrice> =
-                            viewModel.responseToList(responses.rates, responses.date)
+                            viewModel.responseToList(responses)
 
                         currencyAdapter.submitList(listCurrencyNameAndPrice)
                     }
                 }
                 is Resource.Error -> {
                     hideLoadingBar()
-                    response.message?.let { message ->
+                    response.message.let { message ->
                         Toast.makeText(activity, "An error occurred: $message", Toast.LENGTH_LONG)
                             .show()
                     }
