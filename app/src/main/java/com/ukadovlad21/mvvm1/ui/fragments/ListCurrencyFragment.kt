@@ -23,12 +23,13 @@ class ListCurrencyFragment : Fragment(R.layout.fragment_list_currency) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupRecyclerView()
+
 
         currencyAdapter = CurrencyAdapter {
             viewModel.saveCurrency(it)
             Toast.makeText(requireContext(), "${it.name} Saved", Toast.LENGTH_SHORT).show()
         }
+        setupRecyclerView()
 
         viewModel.getCurrency().observe(viewLifecycleOwner) { response ->
             when (response) {

@@ -5,12 +5,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.ukadovlad21.mvvm1.repository.CurrencyRepository
 
+@Suppress("UNCHECKED_CAST")
 class CurrencyViewModelProviderFactory(
     val app: Application,
-    private val currencyRepository: CurrencyRepository
+    private val currencyRepository: CurrencyRepository,
 ) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return CurrencyViewModel(app, currencyRepository, CheckInternetStateUseCase(app), ResponseMapper(currencyRepository)) as T
+        return CurrencyViewModel(app,
+            currencyRepository,
+            CheckInternetStateUseCase(app),
+            ResponseMapper(currencyRepository)) as T
     }
 }

@@ -24,12 +24,14 @@ class CurrencyViewModel internal constructor(
 
     private val currencyLiveData: MutableLiveData<Resource<CurrenciesLatest>> = MutableLiveData()
 
-    private val refreshCurrencyLiveData: MutableLiveData<Resource<CurrencyFromNameToName>> = MutableLiveData()
+    private val refreshCurrencyLiveData: MutableLiveData<Resource<CurrencyFromNameToName>> =
+        MutableLiveData()
 
-    private val convertCurrencyLiveData: MutableLiveData<Resource<CurrencyFromNameToName>> = MutableLiveData()
+    private val convertCurrencyLiveData: MutableLiveData<Resource<CurrencyFromNameToName>> =
+        MutableLiveData()
 
 
-    fun getCurrency() : MutableLiveData<Resource<CurrenciesLatest>> {
+    fun getCurrency(): MutableLiveData<Resource<CurrenciesLatest>> {
         viewModelScope.launch {
             call(currencyLiveData) {
                 currencyRepository.getCurrency("usd")
@@ -39,7 +41,10 @@ class CurrencyViewModel internal constructor(
         return currencyLiveData
     }
 
-    fun convertByNames(fromName: String, toName: String, amount: Int) :  MutableLiveData<Resource<CurrencyFromNameToName>> {
+    fun convertByNames(
+        fromName: String, toName: String,
+        amount: Int,
+    ): MutableLiveData<Resource<CurrencyFromNameToName>> {
         viewModelScope.launch {
             call(convertCurrencyLiveData) {
                 currencyRepository.getCurrencyNameToName(fromName, toName, amount)
@@ -49,7 +54,10 @@ class CurrencyViewModel internal constructor(
         return convertCurrencyLiveData
     }
 
-    fun getByNames(fromName: String, toName: String) :  MutableLiveData<Resource<CurrencyFromNameToName>> {
+    fun getByNames(
+        fromName: String,
+        toName: String,
+    ): MutableLiveData<Resource<CurrencyFromNameToName>> {
         viewModelScope.launch {
             call(refreshCurrencyLiveData) {
                 currencyRepository.getCurrencyNameToName(fromName, toName, 1)
@@ -59,7 +67,10 @@ class CurrencyViewModel internal constructor(
         return refreshCurrencyLiveData
     }
 
-    private suspend fun <T> call(liveData: MutableLiveData<Resource<T>>, getResponse: suspend () -> Response<T>) {
+    private suspend fun <T> call(
+        liveData: MutableLiveData<Resource<T>>,
+        getResponse: suspend () -> Response<T>,
+    ) {
         liveData.postValue(Resource.Loading)
         try {
             if (checkInternetStateUseCase.isInternetAvailable()) {
@@ -86,7 +97,7 @@ class CurrencyViewModel internal constructor(
     }
 
     fun responseToList(
-        currenciesLatest: CurrenciesLatest
+        currenciesLatest: CurrenciesLatest,
     ): List<CurrencyNameAndPrice> = responseMapper.map(currenciesLatest)
 
     //region Database

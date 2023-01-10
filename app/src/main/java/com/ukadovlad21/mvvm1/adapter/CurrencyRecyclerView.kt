@@ -31,38 +31,19 @@ class CurrencyAdapter(
 
     }
 
-    private var _saveItemToDb: ((CurrencyNameAndPrice) -> Unit)? = null
-    fun saveItemToDb(listener: (CurrencyNameAndPrice) -> Unit) {
-        _saveItemToDb = listener
-    }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyItemHolder =
         CurrencyItemHolder(saveItemToDb, parent)
 
     override fun onBindViewHolder(holder: CurrencyItemHolder, position: Int) {
         holder.bind(getItem(position))
-        if (getItem(position).isSaved) {
-            holder.itemView.ibSave.setImageResource(R.drawable.ic_baseline_favorite_36)
-            holder.itemView.ibSave.isClickable = false
-        } else {
-            holder.itemView.ibSave.setImageResource(R.drawable.ic_baseline_favorite_border_36)
-            holder.itemView.ibSave.setOnClickListener {
-                holder.itemView.ibSave.isClickable = false
-                getItem(position).isSaved = true
-                holder.itemView.ibSave.setImageResource(R.drawable.ic_baseline_favorite_36)
-                _saveItemToDb?.let { it(getItem(position)) }
-            }
-        }
-
-
     }
 
 
 }
 
 class CurrencyItemHolder(
-    saveItemToDb: ((CurrencyNameAndPrice) -> Unit),
+    val saveItemToDb: ((CurrencyNameAndPrice) -> Unit),
     container: ViewGroup
 ) : ViewHolder(
     LayoutInflater.from(container.context).inflate(
@@ -75,6 +56,19 @@ class CurrencyItemHolder(
             val price = if (currency.price.toString().length < 8) currency.price.toString()
             else currency.price.toString().substring(0, 8)
             tvCurPrice.text = price
+        }
+        if (currency.isSaved) {
+            itemView.ibSave.setImageResource(R.drawable.ic_baseline_favorite_36)
+            itemView.ibSave.isClickable = false
+        } else {
+            itemView.ibSave.setImageResource(R.drawable.ic_baseline_favorite_border_36)
+
+            itemView.ibSave.setOnClickListener {
+                itemView.ibSave.isClickable = false
+                currency.isSaved = true
+                itemView.ibSave.setImageResource(R.drawable.ic_baseline_favorite_36)
+                saveItemToDb(currency)
+            }
         }
 
     }

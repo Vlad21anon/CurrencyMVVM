@@ -23,29 +23,36 @@ class ExchangeCurrencyFragment : Fragment(R.layout.fragment_exchange_currency) {
         btnConvert.setOnClickListener {
             val toName = spTo.selectedItem.toString()
             val fromName = spFrom.selectedItem.toString()
-            val amount = tietFrom.text.toString().toInt()
+
+            var amount = 1
+            try {
+                amount = tietFrom.text.toString().toInt()
+            } catch (e: java.lang.NumberFormatException) {
+                Toast.makeText(requireContext(), "amount has not been entered", Toast.LENGTH_SHORT)
+                    .show()
+            }
 
             viewModel.convertByNames(fromName, toName, amount)
                 .observe(viewLifecycleOwner) { response ->
-                when (response) {
-                    is Resource.Success -> {
-                        hideLoadingBar()
-                        tvResult.text = response.data.result.toString()
-                        tvDate.text = response.data.date
-                    }
-                    is Resource.Error -> {
-                        hideLoadingBar()
-                        response.message.let { message ->
-                            Toast.makeText(
-                                activity,
-                                "An error occurred: $message",
-                                Toast.LENGTH_LONG
-                            ).show()
+                    when (response) {
+                        is Resource.Success -> {
+                            hideLoadingBar()
+                            tvResult.text = response.data.result.toString()
+                            tvDate.text = response.data.date
                         }
+                        is Resource.Error -> {
+                            hideLoadingBar()
+                            response.message.let { message ->
+                                Toast.makeText(
+                                    activity,
+                                    "An error occurred: $message",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+                        is Resource.Loading -> showLoadingBar()
                     }
-                    is Resource.Loading -> showLoadingBar()
                 }
-            }
         }
 
     }
